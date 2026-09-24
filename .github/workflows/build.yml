@@ -24,11 +24,9 @@ jobs:
 
       - name: Configure CMake
         run: |
-          if [ -f "CMakeLists.txt" ]; then
-            cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
-          elif [ -f "multiband-harmonizer-vst3/CMakeLists.txt" ]; then
-            cmake -S multiband-harmonizer-vst3 -B build -DCMAKE_BUILD_TYPE=Release
-          fi
+          TARGET_DIR=$(dirname $(find . -name CMakeLists.txt | head -n 1))
+          echo "Found CMakeLists.txt in: $TARGET_DIR"
+          cmake -S "$TARGET_DIR" -B build -DCMAKE_BUILD_TYPE=Release
         shell: bash
 
       - name: Build Plugin
